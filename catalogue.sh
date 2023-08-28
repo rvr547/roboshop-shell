@@ -7,6 +7,7 @@ Y="\e[33m"
 LOGDIR=/tmp
 LOGFILE=$LOGDIR/$0-$DATE.log
 USERID=$(id -u)
+USERROBO=$(id roboshop)
 if [ $USERID -ne 0 ]
 then
     echo -e "$R ERROR: Root access required to install the package $N"
@@ -24,7 +25,7 @@ else
 fi  
 }
 
-curl -sL https://rpm.nodesource.com/setup_lts.x | bash
+curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>> $LOGFILE
 
 VALIDATE $? "Setting up npm source "
 
@@ -32,7 +33,14 @@ yum install nodejs -y &>> $LOGFILE
 
 VALIDATE $? " Install nodejs"
 
-useradd roboshop &>> $LOGFILE
+if [ $USERROBO -ne 0 ]
+then
+    useradd roboshop &>> $LOGFILE
+    VALIDATE $? "roboshop user creation"
+else
+    
+    echo "Roboshop User already exists"
+fi
 
 mkdir /app &>> $LOGFILE
 
@@ -44,7 +52,7 @@ cd /app &>> $LOGFILE
 
 VALIDATE $? "Moving to app directoring"
 
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip &>> $LOGFILE
 
 VALIDATE $? "Unzip cataloguee"
 
