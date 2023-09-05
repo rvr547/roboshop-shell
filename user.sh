@@ -38,15 +38,15 @@ useradd roboshop &>> $LOGFILE
 
 mkdir /app &>> $LOGFILE
 
-curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip &>> $LOGFILE
+curl -o /tmp/user.zip https://roboshop-builds.s3.amazonaws.com/user.zip &>> $LOGFILE
 
-VALIDATE $? "downloading catalogue artifact"
+VALIDATE $? "downloading user artifact"
 
 cd /app &>> $LOGFILE
 
 VALIDATE $? "Moving to app directoring"
 
-unzip /tmp/catalogue.zip &>> $LOGFILE
+unzip /tmp/user.zip &>> $LOGFILE
 
 VALIDATE $? "Unzip cataloguee"
 
@@ -54,21 +54,21 @@ npm install &>> $LOGFILE
 
 VALIDATE $? "nmp Install"
 
-cp /home/centos/roboshop-shell/catalogue.service /etc/systemd/system/catalogue.service &>> $LOGFILE
+cp /home/centos/roboshop-shell/user.service /etc/systemd/system/user.service &>> $LOGFILE
 
-VALIDATE $? "copie catalogue.service  to system"
+VALIDATE $? "copie user.service  to system"
 
 systemctl daemon-reload &>> $LOGFILE
 
 VALIDATE $? "daemon-reload"
 
-systemctl enable catalogue &>> $LOGFILE
+systemctl enable user &>> $LOGFILE
 
-VALIDATE $? "Enable catalogue"
+VALIDATE $? "Enable user"
 
-systemctl start catalogue &>> $LOGFILE
+systemctl start user &>> $LOGFILE
 
-VALIDATE $? "Start catalogue"
+VALIDATE $? "Start user"
 
 cp /home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
 
@@ -78,6 +78,6 @@ yum install mongodb-org-shell -y &>> $LOGFILE
 
 VALIDATE $? "Install mongodb-org-shell"
 
-mongo --host mongodb.preprv.online </app/schema/catalogue.js &>> $LOGFILE
+mongo --host mongodb.preprv.online </app/schema/user.js &>> $LOGFILE
 
-VALIDATE $? "Loding catalogue data into mongodb"
+VALIDATE $? "Loding user data into mongodb"
