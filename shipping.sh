@@ -7,7 +7,7 @@ Y="\e[33m"
 LOGDIR=/tmp
 LOGFILE=$LOGDIR/$0-$DATE.log
 USERID=$(id -u)
-USERROBO=$(id roboshop)
+#USERROBO=$(id roboshop)
 
 if [ $USERID -ne 0 ]
 then
