@@ -74,7 +74,7 @@ yum install mysql -y &>>$LOGFILE
 
 VALIDATE $? "Installing mysql"
 
-mysql -h mongodb.preprv.online -uroot -pRoboShop@1 < /app/schema/shipping.sql &>>$LOGFILE
+mysql -h mysql.preprv.online -uroot -pRoboShop@1 < /app/schema/shipping.sql &>>$LOGFILE
 
 VALIDATE $? "Loding data"
 
